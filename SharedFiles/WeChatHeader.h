@@ -289,7 +289,6 @@
 
 @interface CAppViewControllerManager : NSObject
 + (id)topViewControllerOfMainWindow;
-+ (id)topMostController;
 + (UINavigationController *)getCurrentNavigationController;
 @end
 
