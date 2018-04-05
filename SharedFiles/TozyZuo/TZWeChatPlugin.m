@@ -178,16 +178,32 @@ CHConstructor {
     CHClassHook(0,CommonMessageCellView,layoutInternal);
 }
 
-CHDeclareClass(VoiceMessageViewModel)
 
+CHDeclareClass(BaseMsgContentViewController)
+CHOptimizedMethod0(self, void, BaseMsgContentViewController, StopRecording)
+{
+    CHSuper0(BaseMsgContentViewController, StopRecording);
+
+    // delay一下错过AudioSender的isRecording标识
+    if ([TZWeChatPluginConfig sharedConfig].translateMyselfVoiceEnable) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self reloadViewInteral];
+        });
+    }
+}
+
+CHDeclareClass(VoiceMessageViewModel)
 CHOptimizedMethod1(self, CGSize, VoiceMessageViewModel, measureContentViewSize, CGSize, arg1)
 {
     if ([TZWeChatPluginConfig sharedConfig].autoTranslateVoiceEnable &&
+        // 没有转换信息
         !self.voiceTranslateInfo &&
+        // 没有在录音
+        ![[[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("AudioSender")] isRecording] &&
         // 是否翻译自己
         (!self.contact.isSelf || [TZWeChatPluginConfig sharedConfig].translateMyselfVoiceEnable))
     {
-        VoiceTranslateMsgMgr *voiceTranslateMsgMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:[objc_getClass("VoiceTranslateMsgMgr") class]];
+        VoiceTranslateMsgMgr *voiceTranslateMsgMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("VoiceTranslateMsgMgr")];
         VoiceTranslateUtil *util = CHIvar(voiceTranslateMsgMgr, m_oVoiceTranslateUtil, __strong VoiceTranslateUtil *);
         if ([util isLocalTransResultExist:self.messageWrap]) {
             VoiceTranslateInfo *info = [[objc_getClass("VoiceTranslateInfo") alloc] init];
@@ -207,36 +223,11 @@ CHOptimizedMethod1(self, CGSize, VoiceMessageViewModel, measureContentViewSize, 
     return CHSuper1(VoiceMessageViewModel, measureContentViewSize, arg1);
 }
 
-CHDeclareClass(BaseMsgContentViewController)
-CHOptimizedMethod(2, self,UITableViewCell *,BaseMsgContentViewController,tableView,UITableView*,arg1,cellForRowAtIndexPath,NSIndexPath *,arg2)
-{
-    ChatTableViewCell *cell = (ChatTableViewCell *)CHSuper(2, BaseMsgContentViewController,tableView,arg1,cellForRowAtIndexPath,arg2);
-
-    if ([cell.cellView isKindOfClass:objc_getClass("VoiceMessageCellView")]) {
-        VoiceMessageViewModel *model = (VoiceMessageViewModel *)cell.cellView.viewModel;
-
-        if (![model canShowTranslateText]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                VoiceTranslateMsgMgr *voiceTranslateMsgMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:[objc_getClass("VoiceTranslateMsgMgr") class]];
-//                [voiceTranslateMsgMgr translateVoiceMessage:model.messageWrap];
-            });
-        }
-
-        NSLog(@"%@", model);
-    }
-
-    return cell;
-}
-
-
 CHConstructor{
 
     CHLoadLateClass(VoiceMessageViewModel);
-    CHClassHook(1,VoiceMessageViewModel,measureContentViewSize);
-//    CHClassHook(1,VoiceMessageViewModel,setVoiceTranslateInfo);
+    CHClassHook(1, VoiceMessageViewModel, measureContentViewSize);
 
-
-//    CHLoadLateClass(BaseMsgContentViewController);
-//    CHClassHook(2,BaseMsgContentViewController,tableView,cellForRowAtIndexPath);
-
+    CHLoadLateClass(BaseMsgContentViewController);
+    CHClassHook(0, BaseMsgContentViewController, StopRecording);
 }
