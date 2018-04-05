@@ -48,6 +48,7 @@ static NSString * const LKContentKey = @"LKContentKey";
         self.textLabel = label;
 
         self.frame = frame;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.layer.cornerRadius = 10;
         self.clipsToBounds = YES;
 
@@ -127,12 +128,30 @@ CHOptimizedMethod2(self, void, CMessageMgr, AsyncOnAddMsg, NSString *, msg, MsgW
         CContact *fromUsrContact = [contactMgr getContactByName:wrap.m_nsFromUsr];
         NSMutableString *text = [NSMutableString stringWithString:@""];
 
-        if (fromUsrContact.isChatroom) {
+        if (fromUsrContact.isChatroom) { // 群消息
             CContact *realChatUsrContact = [contactMgr getContactByName:wrap.m_nsRealChatUsr];
+            // 群名
             [text appendFormat:@"[%@] ", [fromUsrContact getContactDisplayName]];
-            [text appendFormat:@"%@:%@", [fromUsrContact getChatRoomMemberDisplayName:realChatUsrContact], wrap.m_nsPushBody];
-        } else {
-            [text appendFormat:@"%@:%@", [fromUsrContact getContactDisplayName], wrap.m_nsPushBody];
+            // 人名
+            [text appendFormat:@"%@:", [fromUsrContact getChatRoomMemberDisplayName:realChatUsrContact]];
+            // 内容
+            if ([UIDevice currentDevice].systemVersion.doubleValue < 10)
+            {
+                NSRange range = [wrap.m_nsPushBody rangeOfString:@":"];
+                if (range.location == NSNotFound) {
+                    [text appendFormat:@"%@", wrap.m_nsPushBody];
+                } else {
+                    [text appendFormat:@"%@", [wrap.m_nsPushBody substringFromIndex:[wrap.m_nsPushBody rangeOfString:@":"].location + 1]];
+                }
+            } else {
+                [text appendString:wrap.m_nsPushBody];
+            }
+        } else { // 个人信息
+            if ([UIDevice currentDevice].systemVersion.doubleValue < 10) {
+                [text appendString:wrap.m_nsPushBody];
+            } else {
+                [text appendFormat:@"%@:%@", [fromUsrContact getContactDisplayName], wrap.m_nsPushBody];
+            }
         }
 
         [[NSNotificationCenter defaultCenter] postNotificationName:LKNewMessageNotification object:nil userInfo:@{LKChatKey : msg, LKContentKey : text}];
