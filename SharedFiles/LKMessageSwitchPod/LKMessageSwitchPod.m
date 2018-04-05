@@ -130,9 +130,9 @@ CHOptimizedMethod2(self, void, CMessageMgr, AsyncOnAddMsg, NSString *, msg, MsgW
         if (fromUsrContact.isChatroom) {
             CContact *realChatUsrContact = [contactMgr getContactByName:wrap.m_nsRealChatUsr];
             [text appendFormat:@"[%@] ", [fromUsrContact getContactDisplayName]];
-            [text appendFormat:@"%@:%@", [fromUsrContact getChatRoomMemberDisplayName:realChatUsrContact], wrap.m_nsContent];
+            [text appendFormat:@"%@:%@", [fromUsrContact getChatRoomMemberDisplayName:realChatUsrContact], wrap.m_nsPushBody];
         } else {
-            [text appendFormat:@"%@:%@", [fromUsrContact getContactDisplayName], wrap.m_nsContent];
+            [text appendFormat:@"%@:%@", [fromUsrContact getContactDisplayName], wrap.m_nsPushBody];
         }
 
         [[NSNotificationCenter defaultCenter] postNotificationName:LKNewMessageNotification object:nil userInfo:@{LKChatKey : msg, LKContentKey : text}];

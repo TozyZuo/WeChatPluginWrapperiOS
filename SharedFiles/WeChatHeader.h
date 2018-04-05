@@ -28,6 +28,7 @@
 @property (nonatomic, assign) int m_uiMessageType;                       // 消息类型
 @property (nonatomic, copy) NSString *m_nsRealChatUsr;
 @property (nonatomic, copy) NSString *m_nsPushContent;
+@property (retain, nonatomic) NSString *m_nsPushBody;
 @property (retain, nonatomic) NSString *m_nsDesc;
 @property (retain, nonatomic) NSString *m_nsAppExtInfo;
 @property (assign, nonatomic) NSUInteger m_uiAppDataSize;
@@ -46,6 +47,7 @@
 
 + (BOOL)isSenderFromMsgWrap:(CMessageWrap*) msgWrap;
 - (CMessageWrap*)initWithMsgType:(int) type;
+- (id)wishingString;
 
 @end
 
@@ -444,10 +446,9 @@
 
 @interface MultiSelectContactsViewController : UIViewController
 
-@property(nonatomic) _Bool m_bKeepCurViewAfterSelect; // @synthesize m_bKeepCurViewAfterSelect=_m_bKeepCurViewAfterSelect;
-@property(nonatomic) unsigned int m_uiGroupScene; // @synthesize m_uiGroupScene;
-
-@property(nonatomic, weak) id <MultiSelectContactsViewControllerDelegate> m_delegate; // @synthesize m_delegate;
+@property(nonatomic) _Bool m_bKeepCurViewAfterSelect;
+@property(nonatomic) unsigned int m_uiGroupScene;
+@property(nonatomic, weak) id <MultiSelectContactsViewControllerDelegate> m_delegate;
 
 @end
 
@@ -500,45 +501,6 @@
     MMCPLabel *m_chatRoomNameLabel;
 }
 @property(readonly, nonatomic) CommonMessageViewModel *viewModel;
-//- (void)initChatRoomNameLabel;
-//- (void)actionSheet:(id)arg1 clickedButtonAtIndex:(long long)arg2;
-//- (_Bool)handleMagicTapAction:(id)arg1;
-//- (_Bool)accessibilityPerformMagicTap;
-//- (id)accessibilityHint;
-//- (void)addMagicTapActions:(id)arg1;
-//- (void)onModifyKFContact:(id)arg1;
-//- (void)onStrangerContactUpdated:(id)arg1 Contact:(id)arg2;
-//- (void)onModifyContact:(id)arg1;
-//- (void)OnAppInfoChanged:(id)arg1;
-//- (void)OnAppWatermarkChanged:(id)arg1;
-//- (void)triggerLongPressFor3DTouchAtLocation:(struct CGPoint)arg1 inCoordinateView:(id)arg2;
-//- (void)onAppButtonClicked:(id)arg1;
-//- (void)onCancelButtonClicked:(id)arg1;
-//- (void)onSendFailButtonClicked:(id)arg1;
-//- (void)onHeadImageLongPressed:(id)arg1;
-//- (void)onHeadImageClicked:(id)arg1;
-//- (void)layoutForCrashWarning;
-//- (void)setHighlighted:(_Bool)arg1;
-//- (void)initAppMessageBlockButton;
-//- (void)initSourceViewInside;
-//- (void)initSourceViewBottom;
-//- (void)addCancelButton;
-//- (void)addSendFailButton;
-//- (void)addSendingView;
-//- (void)initMaskImageView;
-//- (void)initBgImageView;
-//- (void)initHeadImageView;
-//- (void)initCrashWarningLabel;
-//- (void)setFrameForBgImageView:(struct CGRect)arg1;
-//- (struct CGRect)showRectForMenuController;
-//- (void)showUIStatus;
-//- (void)hideUIStatus;
-//- (void)updateStatus;
-//- (void)updateNodeStatus;
-//- (void)layoutContentView;
-//- (void)layoutInternal;
-
-
 @end
 
 @interface ChatTableViewCell : UITableViewCell
@@ -546,10 +508,15 @@
 @end
 
 
-@interface BaseMsgContentViewController
+@protocol BaseMsgContentDelgate <NSObject>
+- (BOOL)IsRecording;
+@end
 
+@interface BaseMsgContentViewController : UIViewController
+
+@property(nonatomic) __weak id <BaseMsgContentDelgate> m_delegate;
 - (id)getCurrentChatName;
-
+- (void)reloadViewInteral;
 @end
 
 @interface MMMsgLogicManager
@@ -613,5 +580,8 @@
 - (struct CGSize)measureContentViewSize:(struct CGSize)arg1;
 @end
 
+@interface AudioSender : NSObject
+- (_Bool)isRecording;
+@end
 
 #endif /* WeChatHeader_h */
