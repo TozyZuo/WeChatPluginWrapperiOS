@@ -5,9 +5,11 @@
 
 感谢[@buginux/WeChatRedEnvelop](https://github.com/buginux/WeChatRedEnvelop)的功能支持。
 
-感谢[@TKkk/WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)的功能支持。
+感谢[@Mainstayz/WeChatWebEmoticon](https://github.com/Mainstayz/WeChatWebEmoticon)的功能支持。
 
 感谢[@sherlockZ/LKMessageSwitchPod](https://github.com/sherlockZ/LKMessageSwitchPod)的功能支持。
+
+感谢[@TKkk/WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)的功能支持。
 
 ---
 
@@ -21,6 +23,12 @@
 
 ### WeChatRedEnvelop
 - [x] 各种抢红包功能 (**功能有修改**)
+
+### WeChatWebEmoticon（v1.0.0）
+在微信WebView上，对Gif，静态图一键保存生成表情，突破微信Gif表情保存大小的限制
+
+### LKMessageSwitchPod
+在任意页面, 接收到异步消息, 通知当前页面弹出一个按钮提示, 点击按钮 push 对应聊天页面, pop 可返回原来的页面。(**功能有修改**)
 
 ### WeChatPlugin-iOS（v1.0.0）
 - [x] 游戏作弊（石头剪刀布、骰子）
@@ -36,9 +44,6 @@
 
 **统一设置群公告、敏感词自动踢人、入群欢迎语 仅对自己创建的群有效**
 
-### LKMessageSwitchPod
-在任意页面, 接收到异步消息, 通知当前页面弹出一个按钮提示, 点击按钮 push 对应聊天页面, pop 可返回原来的页面。(**功能有修改**)
-
 ---
 
 ### 增加功能
@@ -49,5 +54,5 @@
 ---
 
 ### 使用方法
-参考[MonkeyDev Wiki](https://github.com/AloneMonkey/MonkeyDev/wiki) 
+参考 [MonkeyDev Wiki](https://github.com/AloneMonkey/MonkeyDev/wiki) 
 
