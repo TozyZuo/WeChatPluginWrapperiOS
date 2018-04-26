@@ -18,6 +18,7 @@
 
 static NSString * const LKNewMessageNotification = @"LKNewMessageNotification";
 static NSString * const LKDidEnterChatNotification = @"LKDidEnterChatNotification";
+static NSString * const LKViewDidDismissNotification = @"LKViewDidDismissNotification";
 static NSString * const LKChatKey = @"LKChatKey";
 static NSString * const LKContentKey = @"LKContentKey";
 
@@ -26,7 +27,8 @@ static NSString * const LKContentKey = @"LKContentKey";
 @property (nonatomic, strong) NSString *chat;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UILabel *textLabel;
-@property (nonatomic,  weak ) id observer;
+@property (nonatomic,  weak ) id didEnterChatObserver;
+@property (nonatomic,  weak ) id viewDidDismissObserver;
 @end
 @implementation LKNotificationView
 
@@ -53,7 +55,14 @@ static NSString * const LKContentKey = @"LKContentKey";
         self.clipsToBounds = YES;
 
         __weak typeof(self) weakSelf = self;
-        self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:LKDidEnterChatNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
+        self.didEnterChatObserver = [[NSNotificationCenter defaultCenter] addObserverForName:LKDidEnterChatNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
+        {
+            if ([weakSelf.chat isEqual: note.userInfo[LKChatKey]]) {
+                [weakSelf clear];
+            }
+        }];
+
+        self.viewDidDismissObserver = [[NSNotificationCenter defaultCenter] addObserverForName:LKViewDidDismissNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
         {
             if ([weakSelf.chat isEqual: note.userInfo[LKChatKey]]) {
                 [weakSelf clear];
@@ -81,8 +90,9 @@ static NSString * const LKContentKey = @"LKContentKey";
 
 - (void)clear
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self.observer];
     [self removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.viewDidDismissObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.didEnterChatObserver];
 }
 
 @end
@@ -113,7 +123,7 @@ void DismissAnimation(LKNotificationView *view, UISwipeGestureRecognizerDirectio
                 break;
         }
     } completion:^(BOOL finished) {
-        [view clear];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LKViewDidDismissNotification object:nil userInfo:@{LKChatKey : view.chat ?: @""}];
     }];
 }
 
