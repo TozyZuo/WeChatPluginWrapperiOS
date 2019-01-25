@@ -60,8 +60,8 @@
 
 - (void)addAloneMonkeySection
 {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"AloneMonkey" Footer:nil];
-    [sectionInfo addCell:[objc_getClass("MMTableViewCellInfo") normalCellForSel:NSSelectorFromString(@"AloneMonkey") target:self title:@"修改定位" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
+    WCTableViewSectionManager *sectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"AloneMonkey" Footer:nil];
+    [sectionInfo addCell:[objc_getClass("WCTableViewNormalCellManager") normalCellForSel:NSSelectorFromString(@"AloneMonkey") target:self title:@"修改定位" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
 
     [self.tableViewInfo addSection:sectionInfo];
 }
@@ -73,8 +73,8 @@
 
 - (void)addBuginuxSection
 {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"Buginux" Footer:nil];
-    [sectionInfo addCell:[objc_getClass("MMTableViewCellInfo") normalCellForSel:NSSelectorFromString(@"Buginux") target:self title:@"抢红包设置" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
+    WCTableViewSectionManager *sectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"Buginux" Footer:nil];
+    [sectionInfo addCell:[objc_getClass("WCTableViewNormalCellManager") normalCellForSel:NSSelectorFromString(@"Buginux") target:self title:@"抢红包设置" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
 
     [self.tableViewInfo addSection:sectionInfo];
 }
@@ -86,8 +86,8 @@
 
 - (void)addTKkkSection
 {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"TKkk" Footer:nil];
-    [sectionInfo addCell:[objc_getClass("MMTableViewCellInfo") normalCellForSel:NSSelectorFromString(@"TKkk") target:self title:@"微信小助手" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
+    WCTableViewSectionManager *sectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"TKkk" Footer:nil];
+    [sectionInfo addCell:[objc_getClass("WCTableViewNormalCellManager") normalCellForSel:NSSelectorFromString(@"TKkk") target:self title:@"微信小助手" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
 
     [self.tableViewInfo addSection:sectionInfo];
 }
@@ -99,8 +99,8 @@
 
 - (void)addTozyZuoSection
 {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"TozyZuo" Footer:nil];
-    [sectionInfo addCell:[objc_getClass("MMTableViewCellInfo") normalCellForSel:NSSelectorFromString(@"TozyZuo") target:self title:@"WeChatPlugin" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
+    WCTableViewSectionManager *sectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"TozyZuo" Footer:nil];
+    [sectionInfo addCell:[objc_getClass("WCTableViewNormalCellManager") normalCellForSel:NSSelectorFromString(@"TozyZuo") target:self title:@"WeChatPlugin" accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
 
     [self.tableViewInfo addSection:sectionInfo];
 }

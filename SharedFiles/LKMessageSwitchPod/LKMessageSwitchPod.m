@@ -208,7 +208,16 @@ CHDeclareMethod1(void, MMUIViewController, messageCallBack, NSNotification *, no
         swipe.direction = UISwipeGestureRecognizerDirectionRight;
         swipe.numberOfTouchesRequired = 1;
         [view addGestureRecognizer:swipe];
-        [self.navigationController.fd_fullscreenPopGestureRecognizer requireGestureRecognizerToFail:swipe];
+        if ([self.navigationController respondsToSelector:@selector(fd_fullscreenPopGestureRecognizer)])
+        {
+            UIGestureRecognizer *pan = [self.navigationController performSelector:@selector(fd_fullscreenPopGestureRecognizer)];
+            [pan requireGestureRecognizerToFail:swipe];
+        }
+        if ([self.navigationController respondsToSelector:@selector(tz_fullscreenPopGestureRecognizer)])
+        {
+            UIGestureRecognizer *pan = [self.navigationController performSelector:@selector(tz_fullscreenPopGestureRecognizer)];
+            [pan requireGestureRecognizerToFail:swipe];
+        }
 
         [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backToMsgContentViewController:)]];
         [self.view addSubview:view];

@@ -14,7 +14,7 @@
 
 @interface TKSettingViewController ()
 
-@property (nonatomic, strong) MMTableViewInfo *tableViewInfo;
+@property (nonatomic, strong) WCTableViewManager *tableViewInfo;
 
 @end
 
@@ -28,7 +28,7 @@
             winSize.size.height -= 88;
             winSize.origin.y = 88;
         }
-        _tableViewInfo = [[objc_getClass("MMTableViewInfo") alloc] initWithFrame:winSize style:UITableViewStyleGrouped];
+        _tableViewInfo = [[objc_getClass("WCTableViewManager") alloc] initWithFrame:winSize style:UITableViewStyleGrouped];
     }
     return self;
 }
@@ -60,7 +60,7 @@
 
 #pragma mark - 设置 TableView
 - (void)addNiubilitySection {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"装逼必备" Footer:nil];
+    WCTableViewSectionManager *sectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"装逼必备" Footer:nil];
     [sectionInfo addCell:[self createStepSwitchCell]];
 
     BOOL changeStepEnable = [[TKRobotConfig sharedConfig] changeStepEnable];
@@ -74,7 +74,7 @@
 }
 
 - (void)addContactVerifySection {
-    MMTableViewSectionInfo *verifySectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"过滤好友请求设置" Footer:nil];
+    WCTableViewSectionManager *verifySectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"过滤好友请求设置" Footer:nil];
     [verifySectionInfo addCell:[self createVerifySwitchCell]];
 
     BOOL autoVerifyEnable = [[TKRobotConfig sharedConfig] autoVerifyEnable];
@@ -91,7 +91,7 @@
 }
 
 - (void)addAutoReplySection {
-    MMTableViewSectionInfo *autoReplySectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"自动回复设置" Footer:nil];
+    WCTableViewSectionManager *autoReplySectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"自动回复设置" Footer:nil];
     [autoReplySectionInfo addCell:[self createAutoReplySwitchCell]];
 
     BOOL autoReplyEnable = [[TKRobotConfig sharedConfig] autoReplyEnable];
@@ -103,7 +103,7 @@
 }
 
 - (void)addGroupSettingSection {
-    MMTableViewSectionInfo *groupSectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"群设置" Footer:nil];
+    WCTableViewSectionManager *groupSectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"群设置" Footer:nil];
     [groupSectionInfo addCell:[self createSetChatRoomDescCell]];
     [groupSectionInfo addCell:[self createAutoDeleteMemberCell]];
     [groupSectionInfo addCell:[self createWelcomeJoinChatRoomSwitchCell]];
@@ -124,137 +124,137 @@
 }
 
 #pragma mark - 装逼必备
-- (MMTableViewCellInfo *)createStepSwitchCell {
+- (WCTableViewCellManager *)createStepSwitchCell {
     BOOL changeStepEnable = [[TKRobotConfig sharedConfig] changeStepEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingStepSwitch:) target:self title:@"是否修改微信步数" on:changeStepEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingStepSwitch:) target:self title:@"是否修改微信步数" on:changeStepEnable];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createStepCountCell {
+- (WCTableViewCellManager *)createStepCountCell {
     NSInteger deviceStep = [[TKRobotConfig sharedConfig] deviceStep];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingStepCount) target:self title:@"微信运动步数" rightValue:[NSString stringWithFormat:@"%ld", (long)deviceStep] accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingStepCount) target:self title:@"微信运动步数" rightValue:[NSString stringWithFormat:@"%ld", (long)deviceStep] accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createRevokeSwitchCell {
+- (WCTableViewCellManager *)createRevokeSwitchCell {
     BOOL preventRevokeEnable = [[TKRobotConfig sharedConfig] preventRevokeEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingRevokeSwitch:) target:self title:@"拦截撤回消息" on:preventRevokeEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingRevokeSwitch:) target:self title:@"拦截撤回消息" on:preventRevokeEnable];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createGameCheatSwitchCell {
+- (WCTableViewCellManager *)createGameCheatSwitchCell {
     BOOL preventGameCheatEnable = [[TKRobotConfig sharedConfig] preventGameCheatEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingGameCheatSwitch:) target:self title:@"开启游戏作弊" on:preventGameCheatEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingGameCheatSwitch:) target:self title:@"开启游戏作弊" on:preventGameCheatEnable];
 
     return cellInfo;
 }
 
 #pragma mark - 添加好友设置
-- (MMTableViewCellInfo *)createVerifySwitchCell {
+- (WCTableViewCellManager *)createVerifySwitchCell {
     BOOL autoVerifyEnable = [[TKRobotConfig sharedConfig] autoVerifyEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingVerifySwitch:) target:self title:@"开启自动添加好友" on:autoVerifyEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingVerifySwitch:) target:self title:@"开启自动添加好友" on:autoVerifyEnable];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoVerifyCell {
+- (WCTableViewCellManager *)createAutoVerifyCell {
     NSString *verifyText = [[TKRobotConfig sharedConfig] autoVerifyKeyword];
     verifyText = verifyText.length == 0 ? @"请填写" : verifyText;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingVerify) target:self title:@"自动通过关键词" rightValue:verifyText accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingVerify) target:self title:@"自动通过关键词" rightValue:verifyText accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createWelcomeSwitchCell {
+- (WCTableViewCellManager *)createWelcomeSwitchCell {
     BOOL autoVerifyEnable = [[TKRobotConfig sharedConfig] autoWelcomeEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingWelcomeSwitch:) target:self title:@"开启欢迎语" on:autoVerifyEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingWelcomeSwitch:) target:self title:@"开启欢迎语" on:autoVerifyEnable];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createWelcomeCell {
+- (WCTableViewCellManager *)createWelcomeCell {
     NSString *welcomeText = [[TKRobotConfig sharedConfig] autoWelcomeText];
     welcomeText = welcomeText.length == 0 ? @"请填写" : welcomeText;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingWelcome) target:self title:@"欢迎语内容" rightValue:welcomeText accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingWelcome) target:self title:@"欢迎语内容" rightValue:welcomeText accessoryType:1];
 
     return cellInfo;
 }
 
 #pragma mark - 自动回复设置
-- (MMTableViewCellInfo *)createAutoReplySwitchCell {
+- (WCTableViewCellManager *)createAutoReplySwitchCell {
     BOOL autoReplyEnable = [[TKRobotConfig sharedConfig] autoReplyEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingAutoReplySwitch:)target:self title:@"开启个人消息自动回复" on:autoReplyEnable];;
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingAutoReplySwitch:)target:self title:@"开启个人消息自动回复" on:autoReplyEnable];;
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoReplyKeywordCell {
+- (WCTableViewCellManager *)createAutoReplyKeywordCell {
     NSString *autoReplyKeyword = [[TKRobotConfig sharedConfig] autoReplyKeyword];
     autoReplyKeyword = autoReplyKeyword.length == 0 ? @"请填写" : autoReplyKeyword;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingAutoReplyKeyword) target:self title:@"特定消息" rightValue:autoReplyKeyword accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingAutoReplyKeyword) target:self title:@"特定消息" rightValue:autoReplyKeyword accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoReplyTextCell {
+- (WCTableViewCellManager *)createAutoReplyTextCell {
     NSString *autoReply = [[TKRobotConfig sharedConfig] autoReplyText];
     autoReply = autoReply.length == 0 ? @"请填写" : autoReply;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingAutoReply) target:self title:@"自动回复内容" rightValue:autoReply accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingAutoReply) target:self title:@"自动回复内容" rightValue:autoReply accessoryType:1];
 
     return cellInfo;
 }
 
 #pragma mark - 群相关设置
 
-- (MMTableViewCellInfo *)createSetChatRoomDescCell {
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingChatRoomDesc) target:self title:@"群公告设置" rightValue:nil accessoryType:1];
+- (WCTableViewCellManager *)createSetChatRoomDescCell {
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingChatRoomDesc) target:self title:@"群公告设置" rightValue:nil accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoDeleteMemberCell {
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingAutoDeleteMember) target:self title:@"自动踢人设置" rightValue:nil accessoryType:1];
+- (WCTableViewCellManager *)createAutoDeleteMemberCell {
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingAutoDeleteMember) target:self title:@"自动踢人设置" rightValue:nil accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createWelcomeJoinChatRoomSwitchCell {
+- (WCTableViewCellManager *)createWelcomeJoinChatRoomSwitchCell {
     BOOL welcomeJoinChatRoomEnable = [[TKRobotConfig sharedConfig] welcomeJoinChatRoomEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingWelcomeJoinChatRoomSwitch:)target:self title:@"开启入群欢迎语" on:welcomeJoinChatRoomEnable];;
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingWelcomeJoinChatRoomSwitch:)target:self title:@"开启入群欢迎语" on:welcomeJoinChatRoomEnable];;
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createWelcomeJoinChatRoomCell {
+- (WCTableViewCellManager *)createWelcomeJoinChatRoomCell {
     NSString *welcomeJoinChatRoomText = [[TKRobotConfig sharedConfig] welcomeJoinChatRoomText];
     welcomeJoinChatRoomText = welcomeJoinChatRoomText.length == 0 ? @"请填写" : welcomeJoinChatRoomText;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingWelcomeJoinChatRoom) target:self title:@"入群欢迎语" rightValue:welcomeJoinChatRoomText accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingWelcomeJoinChatRoom) target:self title:@"入群欢迎语" rightValue:welcomeJoinChatRoomText accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoReplyChatRoomSwitchCell {
+- (WCTableViewCellManager *)createAutoReplyChatRoomSwitchCell {
     BOOL autoReplyChatRoomEnable = [[TKRobotConfig sharedConfig] autoReplyChatRoomEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingAutoReplyChatRoomSwitch:)target:self title:@"开启群消息自动回复" on:autoReplyChatRoomEnable];;
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingAutoReplyChatRoomSwitch:)target:self title:@"开启群消息自动回复" on:autoReplyChatRoomEnable];;
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoReplyChatRoomKeywordCell {
+- (WCTableViewCellManager *)createAutoReplyChatRoomKeywordCell {
     NSString *autoReplyChatRoomKeyword = [[TKRobotConfig sharedConfig] autoReplyChatRoomKeyword];
     autoReplyChatRoomKeyword = autoReplyChatRoomKeyword.length == 0 ? @"请填写" : autoReplyChatRoomKeyword;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingAutoReplyChatRoomKeyword) target:self title:@"特定消息" rightValue:autoReplyChatRoomKeyword accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingAutoReplyChatRoomKeyword) target:self title:@"特定消息" rightValue:autoReplyChatRoomKeyword accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createAutoReplyChatRoomTextCell {
+- (WCTableViewCellManager *)createAutoReplyChatRoomTextCell {
     NSString *autoReplyChatRoomText = [[TKRobotConfig sharedConfig] autoReplyChatRoomText];
     autoReplyChatRoomText = autoReplyChatRoomText.length == 0 ? @"请填写" : autoReplyChatRoomText;
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(settingAutoReplyChatRoom) target:self title:@"自动回复内容" rightValue:autoReplyChatRoomText accessoryType:1];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(settingAutoReplyChatRoom) target:self title:@"自动回复内容" rightValue:autoReplyChatRoomText accessoryType:1];
 
     return cellInfo;
 }

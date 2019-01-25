@@ -19,6 +19,19 @@
 
 @implementation WBMultiSelectGroupsViewController
 
++ (void)load
+{
+//    class_setSuperclass(self, objc_getClass("MMUIViewController"));
+    NSArray *sels = @[@"getViewController",
+                      @"getSafeBottomInset",
+                      @"getSafeTopInset"];
+    for (NSString *sel in sels) {
+        SEL s = NSSelectorFromString(sel);
+        Method method = class_getInstanceMethod(objc_getClass("MMUIViewController"), s);
+        class_addMethod(self, s, method_getImplementation(method), method_getTypeEncoding(method));
+    }
+}
+
 - (instancetype)initWithBlackList:(NSArray *)blackList {
     if (self = [super initWithNibName:nil bundle:nil]) {
         _blackList = blackList;

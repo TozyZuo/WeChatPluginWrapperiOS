@@ -79,14 +79,14 @@
 }
 
 - (void)addHeaderSection {
-    MMTableViewSectionInfo *headerSectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:nil Footer:nil];
+    WCTableViewSectionManager *headerSectionInfo = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:nil Footer:nil];
     [headerSectionInfo addCell:[self createSensitiveSwitchCell]];
     [headerSectionInfo addCell:[self createNewSensitiveCell]];
     [self.tableViewInfo addSection:headerSectionInfo];
 }
 
 - (void)addSensitiveTextSection {
-    MMTableViewSectionInfo *sensitiveTextSection = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"敏感词" Footer:nil];
+    WCTableViewSectionManager *sensitiveTextSection = [objc_getClass("WCTableViewSectionManager") sectionInfoHeader:@"敏感词" Footer:nil];
 
     [self.chatRoomSensitiveArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [sensitiveTextSection addCell:[self createSensitiveCellWithIndex:idx andText:obj]];
@@ -95,23 +95,23 @@
     [self.tableViewInfo addSection:sensitiveTextSection];
 }
 
-- (MMTableViewCellInfo *)createSensitiveSwitchCell {
+- (WCTableViewCellManager *)createSensitiveSwitchCell {
     BOOL chatRoomSensitiveEnable = [[TKRobotConfig sharedConfig] chatRoomSensitiveEnable];
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(settingSensitiveSwitch:)target:self title:@"开启敏感词检测" on:chatRoomSensitiveEnable];
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewCellManager") switchCellForSel:@selector(settingSensitiveSwitch:)target:self title:@"开启敏感词检测" on:chatRoomSensitiveEnable];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createNewSensitiveCell {
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(addSensitiveAction) target:self title:@"新增敏感词" accessoryType:1];
+- (WCTableViewCellManager *)createNewSensitiveCell {
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(addSensitiveAction) target:self title:@"新增敏感词" accessoryType:1];
 
     return cellInfo;
 }
 
-- (MMTableViewCellInfo *)createSensitiveCellWithIndex:(int)index andText:(NSString *)text {
-    MMTableViewCellInfo *cellInfo = [objc_getClass("MMTableViewCellInfo")  normalCellForSel:@selector(editSensitiveText:) target:self title:text accessoryType:1];
+- (WCTableViewCellManager *)createSensitiveCellWithIndex:(int)index andText:(NSString *)text {
+    WCTableViewCellManager *cellInfo = [objc_getClass("WCTableViewNormalCellManager")  normalCellForSel:@selector(editSensitiveText:) target:self title:text accessoryType:1];
     cellInfo.userInfo = @{@"index" : @(index),@"text":text};
-    cellInfo.editStyle = UITableViewCellEditingStyleDelete;
+    cellInfo.cellConfig.editStyle = UITableViewCellEditingStyleDelete;
 
     return cellInfo;
 }
@@ -147,7 +147,7 @@
     [self.navigationController PushViewController:editVC animated:YES];
 }
 
-- (void)editSensitiveText:(MMTableViewCellInfo *)agr {
+- (void)editSensitiveText:(WCTableViewCellManager *)agr {
     NSInteger index = [agr.userInfo[@"index"] integerValue];
     TKEditViewController *editVC = [[TKEditViewController alloc] init];
     editVC.title = @"编辑敏感词";
@@ -174,10 +174,10 @@
     [self.navigationController PushViewController:editVC animated:YES];
 }
 
-- (void)commitEditingForRowAtIndexPath:(NSIndexPath *)arg1 Cell:(MMTableViewCellInfo *)arg2 {
+- (void)commitEditingForRowAtIndexPath:(NSIndexPath *)arg1 Cell:(WCTableViewCellManager *)arg2 {
     [self.chatRoomSensitiveArray removeObjectAtIndex:arg1.row];
     [[TKRobotConfig sharedConfig] setChatRoomSensitiveArray:self.chatRoomSensitiveArray];
-    MMTableViewSectionInfo *sensitiveTextSection = [self.tableViewInfo getSectionAt:1];
+    WCTableViewSectionManager *sensitiveTextSection = [self.tableViewInfo getSectionAt:1];
     [sensitiveTextSection removeCellAt:arg1.row];
     [self reloadTableData];
 }

@@ -257,9 +257,9 @@
 
 	MMTableViewInfo *tableViewInfo = MSHookIvar<id>(self, "m_tableViewInfo");
 
-	MMTableViewSectionInfo *sectionInfo = [%c(MMTableViewSectionInfo) sectionInfoDefaut];
+	WCTableViewSectionManager *sectionInfo = [%c(WCTableViewSectionManager) defaultSection];
 
-	MMTableViewCellInfo *settingCell = [%c(MMTableViewCellInfo) normalCellForSel:@selector(setting) target:self title:@"微信小助手" accessoryType:1];
+	WCTableViewCellManager *settingCell = [%c(WCTableViewNormalCellManager) normalCellForSel:@selector(setting) target:self title:@"微信小助手" accessoryType:1];
 	[sectionInfo addCell:settingCell];
 
 	CContactMgr *contactMgr = [[%c(MMServiceCenter) defaultCenter] getService:%c(CContactMgr)];
@@ -274,7 +274,7 @@
 		[contactMgr getContactsFromServer:@[contact]];
 	}
 
-	MMTableViewCellInfo *followOfficalAccountCell = [%c(MMTableViewCellInfo) normalCellForSel:@selector(followMyOfficalAccount) target:self title:@"关注我的公众号" rightValue:rightValue accessoryType:1];
+	WCTableViewCellManager *followOfficalAccountCell = [%c(WCTableViewNormalCellManager) normalCellForSel:@selector(followMyOfficalAccount) target:self title:@"关注我的公众号" rightValue:rightValue accessoryType:1];
 	[sectionInfo addCell:followOfficalAccountCell];
 
 	[tableViewInfo insertSection:sectionInfo At:0];

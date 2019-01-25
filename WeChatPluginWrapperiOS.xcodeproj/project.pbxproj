@@ -105,8 +105,6 @@
 		BA38E04E206DFC8B00652F36 /* zhPopupController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38DFC6206DFC8B00652F36 /* zhPopupController.m */; };
 		BA38E04F206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = BA38DFC9206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.h */; };
 		BA38E050206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = BA38DFC9206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.h */; };
-		BA38E051206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38DFCA206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m */; };
-		BA38E052206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38DFCA206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		BA38E053206DFC8B00652F36 /* NSDate+TZCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = BA38DFCB206DFC8B00652F36 /* NSDate+TZCategory.h */; };
 		BA38E054206DFC8B00652F36 /* NSDate+TZCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = BA38DFCB206DFC8B00652F36 /* NSDate+TZCategory.h */; };
 		BA38E055206DFC8B00652F36 /* NSDate+TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38DFCC206DFC8B00652F36 /* NSDate+TZCategory.m */; };
@@ -1012,9 +1010,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6F9E02206DDFAC006C6A7C /* MethodTrace.m in Sources */,
 				BA38E027206DFC8B00652F36 /* TKMultiSelectContactsViewController.m in Sources */,
 				BA38E037206DFC8B00652F36 /* UIColor+Extend.m in Sources */,
-				BA6F9E02206DDFAC006C6A7C /* MethodTrace.m in Sources */,
 				BA38E07D206DFC8B00652F36 /* WechatPodForm.m in Sources */,
 				BA38E045206DFC8B00652F36 /* zhFullView.m in Sources */,
 				BA38E05D206DFC8B00652F36 /* TZWeChatPlugin.m in Sources */,
@@ -1047,7 +1045,6 @@
 				BA38E01B206DFC8B00652F36 /* EmoticonGameCheat.m in Sources */,
 				BA38E067206DFC8B00652F36 /* WeChatPluginSettingViewController.m in Sources */,
 				BA38E075206DFC8B00652F36 /* WeChatStepHook.m in Sources */,
-				BA38E051206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				BA38DFFF206DFC8B00652F36 /* WBRedEnvelopConfig.m in Sources */,
 				BA38DFF3206DFC8B00652F36 /* WBBaseViewController.m in Sources */,
 				BA38E007206DFC8B00652F36 /* WBRedEnvelopTaskManager.m in Sources */,
@@ -1094,7 +1091,6 @@
 				BA38E04E206DFC8B00652F36 /* zhPopupController.m in Sources */,
 				BA38E04A206DFC8B00652F36 /* zhIconLabel.m in Sources */,
 				BA38E038206DFC8B00652F36 /* UIColor+Extend.m in Sources */,
-				BA38E052206DFC8B00652F36 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				BA38E000206DFC8B00652F36 /* WBRedEnvelopConfig.m in Sources */,
 				BA38E03C206DFC8B00652F36 /* UIScreen+Extend.m in Sources */,
 				BA38E074206DFC8B00652F36 /* WeChatRequestHook.m in Sources */,
@@ -1338,9 +1334,9 @@
 				DEVELOPMENT_TEAM = 8FN4JQB9U5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = WeChatPluginWrapperiOS/Info.plist;
-				MONKEYDEV_CLASS_DUMP = NO;
+				MONKEYDEV_CLASS_DUMP = YES;
 				MONKEYDEV_INSERT_DYLIB = YES;
-				MONKEYDEV_RESTORE_SYMBOL = NO;
+				MONKEYDEV_RESTORE_SYMBOL = YES;
 				MONKEYDEV_TARGET_APP = WeChat;
 				PODS_CONFIGURATION_BUILD_DIR = "$BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				PODS_ROOT = "${SRCROOT}/Pods";
@@ -1358,9 +1354,9 @@
 				DEVELOPMENT_TEAM = 8FN4JQB9U5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = WeChatPluginWrapperiOS/Info.plist;
-				MONKEYDEV_CLASS_DUMP = NO;
+				MONKEYDEV_CLASS_DUMP = YES;
 				MONKEYDEV_INSERT_DYLIB = YES;
-				MONKEYDEV_RESTORE_SYMBOL = NO;
+				MONKEYDEV_RESTORE_SYMBOL = YES;
 				MONKEYDEV_TARGET_APP = WeChat;
 				PODS_CONFIGURATION_BUILD_DIR = "$BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				PODS_ROOT = "${SRCROOT}/Pods";

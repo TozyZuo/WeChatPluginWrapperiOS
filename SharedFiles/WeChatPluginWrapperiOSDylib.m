@@ -32,18 +32,25 @@ CHOptimizedMethod0(self, void, NewSettingViewController, reloadTableData)
 {
     CHSuper0(NewSettingViewController, reloadTableData);
 
-    MMTableViewInfo *tableViewInfo = CHIvar(self, m_tableViewInfo, __strong MMTableViewInfo *);
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoDefaut];
-    MMTableViewCellInfo *settingCell = [objc_getClass("MMTableViewCellInfo") normalCellForSel:@selector(pluginSetting) target:self title:@"插件设置" accessoryType:1];
-    [sectionInfo addCell:settingCell];
-    [tableViewInfo insertSection:sectionInfo At:0];
-    MMTableView *tableView = [tableViewInfo getTableView];
+    WCTableViewManager *manager = self.tableViewManager;
+
+    WCTableViewSectionManager *section = [objc_getClass("WCTableViewSectionManager") defaultSection];
+    WCTableViewNormalCellManager *cell = [objc_getClass("WCTableViewNormalCellManager") normalCellForSel:@selector(pluginSetting) target:self title:@"插件设置" accessoryType:1];
+    [section addCell:cell];
+    [manager insertSection:section At:0];
+
+    MMTableView *tableView = [manager getTableView];
     [tableView reloadData];
 }
 
 CHDeclareMethod0(void, NewSettingViewController, pluginSetting)
 {
     [self.navigationController PushViewController:[[WeChatPluginSettingViewController alloc] init] animated:YES];
+}
+
+CHDeclareMethod0(WCTableViewManager *, NewSettingViewController, tableViewManager)
+{
+    return CHIvar(self, m_tableViewMgr, __strong WCTableViewManager *);
 }
 
 CHConstructor {

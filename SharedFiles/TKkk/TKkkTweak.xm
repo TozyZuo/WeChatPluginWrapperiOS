@@ -278,8 +278,8 @@
 // - (void)reloadTableData {
 // 	%orig;
 // 	MMTableViewInfo *tableViewInfo = MSHookIvar<id>(self, "m_tableViewInfo");
-// 	MMTableViewSectionInfo *sectionInfo = [%c(MMTableViewSectionInfo) sectionInfoDefaut];
-// 	MMTableViewCellInfo *settingCell = [%c(MMTableViewCellInfo) normalCellForSel:@selector(setting) target:self title:@"微信小助手" accessoryType:1];
+// 	WCTableViewSectionManager *sectionInfo = [%c(WCTableViewSectionManager) defaultSection];
+// 	WCTableViewCellManager *settingCell = [%c(WCTableViewNormalCellManager) normalCellForSel:@selector(setting) target:self title:@"微信小助手" accessoryType:1];
 // 	[sectionInfo addCell:settingCell];
 // 	[tableViewInfo insertSection:sectionInfo At:0];
 // 	MMTableView *tableView = [tableViewInfo getTableView];

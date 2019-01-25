@@ -203,9 +203,9 @@
 - (void)stopLoadingWithOKText:(NSString *)text;
 @end
 
-@class MMTableViewInfo;
+@class MMTableViewInfo, WCTableViewManager;
 @interface NewSettingViewController: MMUIViewController
-
+@property (readonly) WCTableViewManager *tableViewManager;
 @property(nonatomic, strong) MMTableViewInfo *m_tableViewInfo; //
 - (void)reloadTableData;
 @end
@@ -216,7 +216,7 @@
 @end
 
 #pragma mark - MMTableView
-
+/*
 @interface MMTableViewInfo
 - (id)getTableView;
 - (void)clearAllSection;
@@ -226,7 +226,7 @@
 @property(nonatomic,assign) id delegate;
 @end
 
-@interface MMTableViewSectionInfo : NSObject
+@interface WCTableViewSectionManager : NSObject
 + (id)sectionInfoDefaut;
 + (id)sectionInfoHeader:(id)arg1;
 + (id)sectionInfoHeader:(id)arg1 Footer:(id)arg2;
@@ -235,7 +235,7 @@
 - (unsigned long long)getCellCount;
 @end
 
-@interface MMTableViewCellInfo
+@interface WCTableViewCellManager
 + (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 accessoryType:(long long)arg4;
 + (id)switchCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 on:(BOOL)arg4;
 + (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 rightValue:(id)arg4 accessoryType:(long long)arg5;
@@ -246,7 +246,7 @@
 @property(nonatomic) long long editStyle; // @synthesize editStyle=_editStyle;
 @property(retain, nonatomic) id userInfo;
 @end
-
+*/
 @interface MMTableView: UITableView
 @end
 
@@ -584,4 +584,52 @@
 - (_Bool)isRecording;
 @end
 
+
+@interface WCTableViewManager
+- (id)getTableView;
+- (void)clearAllSection;
+- (void)addSection:(id)arg1;
+- (void)insertSection:(id)arg1 At:(unsigned int)arg2;
+- (id)getSectionAt:(unsigned int)arg1;
+@property(nonatomic,assign) id delegate;
+@end
+
+@interface MMTableViewInfo : WCTableViewManager
+
+@end
+
+@interface WCTableViewSectionManager
++ (id)defaultSection;
++ (id)sectionInfoHeader:(id)arg1;
++ (id)sectionInfoHeader:(id)arg1 Footer:(id)arg2;
+- (void)addCell:(id)arg1;
+- (void)removeCellAt:(unsigned long long)arg1;
+//- (unsigned long long)getCellCount;
+@end
+
+@interface WCTableViewCellBaseConfig : NSObject
+@property(nonatomic) __weak id clickTarget; // @synthesize clickTarget=_clickTarget;
+@property(nonatomic) SEL clickAction; // @synthesize clickAction=_clickAction;
+@property(nonatomic) long long editStyle; // @synthesize editStyle=_editStyle;
+@property(nonatomic) unsigned long long selectionStyle; // @synthesize selectionStyle=_selectionStyle;
+- (void)addTarget:(id)arg1 clickAction:(SEL)arg2;
+@end
+
+@interface WCTableViewCellManager
+//+ (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 accessoryType:(long long)arg4;
++ (id)switchCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 on:(BOOL)arg4;
+//+ (id)editorCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 margin:(double)arg4 tip:(id)arg5 focus:(_Bool)arg6 text:(id)arg7;
+//+ (id)urlCellForTitle:(id)arg1 url:(id)arg2;
+//- (void)makeSwitchCell:(id)arg1;
+//@property(nonatomic) long long editStyle; // @synthesize editStyle=_editStyle;
+@property(retain, nonatomic) id userInfo;
+@property(retain, nonatomic) WCTableViewCellBaseConfig *cellConfig; // @synthesize cellConfig=_cellConfig;
+@end
+
+
+@interface WCTableViewNormalCellManager : WCTableViewCellManager
++ (WCTableViewNormalCellManager *)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 accessoryType:(long long)arg4;
++ (id)normalCellForTitle:(id)arg1 rightValue:(id)arg2;
++ (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 rightValue:(id)arg4 accessoryType:(long long)arg5;
+@end
 #endif /* WeChatHeader_h */

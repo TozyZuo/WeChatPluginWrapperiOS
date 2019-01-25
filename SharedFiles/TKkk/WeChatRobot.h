@@ -216,7 +216,7 @@ typedef NS_ENUM(NSUInteger, TKArrayTpye) {
 @property(nonatomic,assign) id delegate;
 @end
 
-@interface MMTableViewSectionInfo : NSObject
+@interface WCTableViewSectionManager : NSObject
 + (id)sectionInfoDefaut;
 + (id)sectionInfoHeader:(id)arg1;
 + (id)sectionInfoHeader:(id)arg1 Footer:(id)arg2;
@@ -225,7 +225,7 @@ typedef NS_ENUM(NSUInteger, TKArrayTpye) {
 - (unsigned long long)getCellCount;
 @end
 
-@interface MMTableViewCellInfo
+@interface WCTableViewCellManager
 + (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 accessoryType:(long long)arg4;
 + (id)switchCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 on:(BOOL)arg4;
 + (id)normalCellForSel:(SEL)arg1 target:(id)arg2 title:(id)arg3 rightValue:(id)arg4 accessoryType:(long long)arg5;
