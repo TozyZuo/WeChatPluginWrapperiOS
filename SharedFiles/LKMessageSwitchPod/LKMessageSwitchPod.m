@@ -46,7 +46,7 @@ static NSString * const LKContentKey = @"LKContentKey";
         label.textColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
-        [self addSubview:label];
+        [self.contentView addSubview:label];
         self.textLabel = label;
 
         self.frame = frame;
