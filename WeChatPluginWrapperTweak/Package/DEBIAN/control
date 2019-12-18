@@ -1,6 +1,6 @@
 Package: com.tozy.WeChatPluginWrapperTweak
 Name: WeChatPluginWrapperTweak
-Version: 1.0
+Version: 1.1
 Description: 整合了几个微信插件的插件。1.修改位置 2.抢红包 3.应用内通知 4.TK大神插件 5.添加了显示消息时间，语音自动转文字功能(注：语音自动转文字在微信7.0上会崩溃，后续有时间会修改)
 Section: Tweaks
 Depends: firmware (>= 5.0), mobilesubstrate

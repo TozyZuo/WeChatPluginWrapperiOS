@@ -258,8 +258,8 @@ static NSSet *_ExcludeVCSet;
 
 CHOptimizedMethod1(self, void, MMUIViewController, viewWillAppear, BOOL, flag)
 {
-    NSString *currentVCClassName = @(object_getClassName(self));
-
+    NSString *currentVCClassName = NSStringFromClass([self class]);// @(object_getClassName(self));
+    
     if (![_ExcludeVCSet containsObject:currentVCClassName])
     { //对新好友提示页面和朋友圈评论列表页面设置通知,会导致页面不被释放,消息重复提示的bug
         [[NSNotificationCenter defaultCenter] removeObserver:self name:LKNewMessageNotification object:nil];
@@ -292,8 +292,12 @@ CHConstructor{
     CHLoadLateClass(BaseMsgContentViewController);
     CHClassHook1(BaseMsgContentViewController, viewWillAppear);
     
-    _ExcludeVCSet = [NSSet setWithObjects:@"NSKVONotifying_NewMainFrameViewController"
-                     @"NSKVONotifying_WCCommentListViewController",
-                     @"NSKVONotifying_SayHelloViewController",
-                     @"NSKVONotifying_MinimizeViewController", nil];
+//    _ExcludeVCSet = [NSSet setWithObjects:@"NSKVONotifying_NewMainFrameViewController",
+//                     @"NSKVONotifying_WCCommentListViewController",
+//                     @"NSKVONotifying_SayHelloViewController",
+//                     @"NSKVONotifying_MinimizeViewController", nil];
+    _ExcludeVCSet = [NSSet setWithObjects:@"NewMainFrameViewController",
+                     @"WCCommentListViewController",
+                     @"SayHelloViewController",
+                     @"MinimizeViewController", nil];
 }
