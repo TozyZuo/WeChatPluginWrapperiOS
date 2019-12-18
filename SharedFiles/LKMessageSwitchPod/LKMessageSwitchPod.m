@@ -190,7 +190,10 @@ CHDeclareMethod1(void, MMUIViewController, messageCallBack, NSNotification *, no
     if (![self isKindOfClass:objc_getClass("BaseMsgContentViewController")] ||
         ![[(BaseMsgContentViewController *)self getCurrentChatName] isEqualToString:note.userInfo[LKChatKey]])
     {
-        LKNotificationView *view = [[LKNotificationView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 44)];
+        CGRect statusBarFrame = UIApplication.sharedApplication.statusBarFrame;
+        CGRect navigationBarFrame = self.navigationController.navigationBar.frame;
+        CGFloat marginTop = statusBarFrame.size.height + navigationBarFrame.size.height;
+        LKNotificationView *view = [[LKNotificationView alloc] initWithFrame:CGRectMake(0, marginTop, self.view.width, 44)];
         view.text = note.userInfo[LKContentKey];
         view.chat = note.userInfo[LKChatKey];
 
@@ -251,13 +254,13 @@ CHDeclareMethod1(void, MMUIViewController, handleSwipes, UISwipeGestureRecognize
     DismissAnimation((LKNotificationView *)sender.view, sender.direction);
 }
 
+static NSSet *_ExcludeVCSet;
+
 CHOptimizedMethod1(self, void, MMUIViewController, viewWillAppear, BOOL, flag)
 {
     NSString *currentVCClassName = @(object_getClassName(self));
 
-    if (![currentVCClassName isEqual: @"NSKVONotifying_NewMainFrameViewController"]
-        &&![currentVCClassName isEqual:@"NSKVONotifying_WCCommentListViewController"]
-        && ![currentVCClassName isEqual:@"NSKVONotifying_SayHelloViewController"])
+    if (![_ExcludeVCSet containsObject:currentVCClassName])
     { //对新好友提示页面和朋友圈评论列表页面设置通知,会导致页面不被释放,消息重复提示的bug
         [[NSNotificationCenter defaultCenter] removeObserver:self name:LKNewMessageNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCallBack:) name:LKNewMessageNotification object:nil];
@@ -270,9 +273,7 @@ CHOptimizedMethod1(self, void, MMUIViewController, viewWillDisappear, BOOL, flag
 {
     NSString * currentVCClassName = @(object_getClassName(self));
 
-    if (![currentVCClassName isEqual: @"NSKVONotifying_NewMainFrameViewController"]
-        &&![currentVCClassName isEqual:@"NSKVONotifying_WCCommentListViewController"]
-        && ![currentVCClassName isEqual:@"NSKVONotifying_SayHelloViewController"])
+    if (![_ExcludeVCSet containsObject:currentVCClassName])
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:LKNewMessageNotification object:nil];
     }
@@ -290,4 +291,9 @@ CHConstructor{
 
     CHLoadLateClass(BaseMsgContentViewController);
     CHClassHook1(BaseMsgContentViewController, viewWillAppear);
+    
+    _ExcludeVCSet = [NSSet setWithObjects:@"NSKVONotifying_NewMainFrameViewController"
+                     @"NSKVONotifying_WCCommentListViewController",
+                     @"NSKVONotifying_SayHelloViewController",
+                     @"NSKVONotifying_MinimizeViewController", nil];
 }
